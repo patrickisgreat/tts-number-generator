@@ -13,7 +13,8 @@
     "pirate": "Speak with the swagger and accent of a swashbuckling pirate captain",
     "butler": "Use the refined, polite tone of a distinguished English butler",
     "surfer": "Speak with the laid-back, chill vibe of a California surfer",
-    "scientist": "Deliver with the methodical precision of a research scientist presenting findings"
+    "scientist": "Deliver with the methodical precision of a research scientist presenting findings",
+    "mary_poppins_helium": "Channel Mary Poppins' prim and proper British accent while speaking in a high-pitched, squeaky helium voice - practically perfect in every way but with that distinctive balloon-sucking sound"
   },
   "number_specific": {
     "lucky_numbers": {
