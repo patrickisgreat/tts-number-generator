@@ -1,0 +1,30 @@
+{
+  "prompts": {
+    "excited": "Speak with excitement and energy, like an enthusiastic game show host announcing a winner",
+    "calm": "Use a calm, soothing tone like a meditation guide leading a peaceful session",
+    "professional": "Speak in a professional, confident business tone suitable for corporate presentations",
+    "friendly": "Use a warm, friendly tone like talking to a close friend over coffee",
+    "dramatic": "Deliver with dramatic flair and theatrical emphasis, like a narrator in an epic movie trailer",
+    "robot": "Speak like a sophisticated AI assistant - clear, precise, and slightly robotic but friendly",
+    "whisper": "Speak in a soft, intimate whisper as if sharing a secret",
+    "teacher": "Use the patient, encouraging tone of a kindergarten teacher helping young students learn",
+    "newscaster": "Deliver with the authoritative, clear tone of a professional news anchor",
+    "sleepy": "Sound drowsy and relaxed, like someone speaking while half-asleep",
+    "pirate": "Speak with the swagger and accent of a swashbuckling pirate captain",
+    "butler": "Use the refined, polite tone of a distinguished English butler",
+    "surfer": "Speak with the laid-back, chill vibe of a California surfer",
+    "scientist": "Deliver with the methodical precision of a research scientist presenting findings"
+  },
+  "number_specific": {
+    "lucky_numbers": {
+      "7": "This is a LUCKY number seven - speak with extra excitement and a sense of fortune",
+      "13": "Thirteen... speak with mysterious, slightly ominous undertones",
+      "21": "Twenty-one! The winning number - announce with celebration and triumph"
+    }
+  },
+  "range_specific": {
+    "1-100": "For numbers one through one hundred, use a cheerful, educational tone like counting with children",
+    "101-1000": "For numbers in the hundreds, speak with growing confidence and authority",
+    "1001-8000": "For numbers in the thousands, deliver with the gravitas of announcing important statistics"
+  }
+}

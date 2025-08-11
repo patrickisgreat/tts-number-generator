@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "voice-number-generator"
+version = "0.1.0"
+description = "Generate WAV files for numbers 1-8000 using OpenAI's Text-to-Speech API"
+authors = ["Your Name <your.email@example.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openai = "^1.0.0"
+tqdm = "^4.65.0"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.0.0"
+black = "^24.0.0"
+
+[tool.poetry.scripts]
+generate-numbers = "generate_numbers:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
