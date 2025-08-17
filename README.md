@@ -328,8 +328,8 @@ python3 generate_numbers_elevenlabs.py --voice-id 21m00Tcm4TlvDq8ikWAM --model e
 
 ## License
 
-[Add your license information here]
+MIFREE License YO!
 
 ## Contributing
 
-[Add contribution guidelines here]
+pleez contrib ? 
