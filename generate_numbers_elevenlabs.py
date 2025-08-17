@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 class ElevenLabsTTSNumberGenerator:
     """ElevenLabs TTS Number Generator for creating voice files from numbers."""
 
-    def __init__(self, api_key=None, voice_id=None, model="eleven_monolingual_v1"):
+    def __init__(self, api_key=None, voice_id=None, model="eleven_monolingual_v1", style_prompt=None):
         """
         Initialize the ElevenLabs TTS Number Generator
 
@@ -40,23 +40,43 @@ class ElevenLabsTTSNumberGenerator:
             api_key: ElevenLabs API key (if None, will use ELEVENLABS_API_KEY env var)
             voice_id: Voice ID to use (if None, will list available voices)
             model: Model to use (eleven_monolingual_v1, eleven_multilingual_v1, etc.)
+            style_prompt: Optional style instruction to add before each number
         """
         self.client = ElevenLabs(api_key=api_key)
         self.voice_id = voice_id
         self.model = model
+        self.style_prompt = style_prompt
         self.output_dir = Path("number_audio_files")
         self.failed_numbers = []
 
         # Create output directory
         self.output_dir.mkdir(exist_ok=True)
 
-        # Voice settings for consistent quality
-        self.voice_settings = VoiceSettings(
-            stability=0.7,
-            similarity_boost=0.8,
-            style=0.0,
-            use_speaker_boost=True
-        )
+        # Voice settings - adjust based on style prompt
+        if style_prompt and any(word in style_prompt.lower() for word in ['calm', 'chill', 'relax', 'soft', 'whisper', 'gentle']):
+            # Chill/relaxed settings
+            self.voice_settings = VoiceSettings(
+                stability=0.95,     # Very stable for calm delivery
+                similarity_boost=0.6,  # Lower for natural variation
+                style=0.1,          # Minimal style, more natural
+                use_speaker_boost=True
+            )
+        elif style_prompt and any(word in style_prompt.lower() for word in ['confident', 'authority', 'strong']):
+            # Confident settings
+            self.voice_settings = VoiceSettings(
+                stability=0.8,      # Slightly less stable for expression
+                similarity_boost=0.9,  # High similarity for consistent tone
+                style=0.4,          # More stylized
+                use_speaker_boost=True
+            )
+        else:
+            # Default settings
+            self.voice_settings = VoiceSettings(
+                stability=0.85,
+                similarity_boost=0.75,
+                style=0.2,
+                use_speaker_boost=True
+            )
 
         logger.info("Initialized ElevenLabs TTS Generator with voice_id: %s, model: %s",
                    voice_id, model)
@@ -166,14 +186,27 @@ class ElevenLabsTTSNumberGenerator:
             try:
                 # Convert number to words for better pronunciation
                 text = self.number_to_words(number)
+                
+                # Just use the number with a period for natural delivery
+                text = f"{text}."
 
-                # Generate speech
-                audio = self.client.text_to_speech.convert(
-                    text=text,
-                    voice_id=self.voice_id,
-                    model_id=self.model,
-                    voice_settings=self.voice_settings
-                )
+                # Generate speech with emotional context
+                if self.style_prompt:
+                    # Use style prompt as previous_text for emotional context
+                    audio = self.client.text_to_speech.convert(
+                        text=text,
+                        voice_id=self.voice_id,
+                        model_id=self.model,
+                        voice_settings=self.voice_settings,
+                        previous_text=self.style_prompt
+                    )
+                else:
+                    audio = self.client.text_to_speech.convert(
+                        text=text,
+                        voice_id=self.voice_id,
+                        model_id=self.model,
+                        voice_settings=self.voice_settings
+                    )
 
                 # Save to file
                 output_file = self.output_dir / f"{number:05d}.wav"
@@ -343,6 +376,9 @@ def main():
     parser.add_argument(
         '--list-voices', action='store_true',
         help='List available voices and exit')
+    parser.add_argument(
+        '--style-prompt', type=str,
+        help='Style instruction to add before each number (e.g., "In a calm, relaxed tone, say")')
 
     args = parser.parse_args()
 
@@ -387,7 +423,8 @@ def main():
         generator = ElevenLabsTTSNumberGenerator(
             api_key=elevenlabs_api_key, 
             voice_id=voice_id,
-            model=args.model
+            model=args.model,
+            style_prompt=args.style_prompt
         )
 
         # Generate audio files
