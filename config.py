@@ -35,6 +35,15 @@ class Config:
         """Get OpenAI API key from environment or config file."""
         return os.getenv('OPENAI_API_KEY')
     
+    @property
+    def elevenlabs_api_key(self) -> Optional[str]:
+        """Get ElevenLabs API key from environment or config file."""
+        return os.getenv('ELEVENLABS_API_KEY')
+    
     def is_configured(self) -> bool:
         """Check if API key is configured."""
         return self.openai_api_key is not None
+    
+    def is_elevenlabs_configured(self) -> bool:
+        """Check if ElevenLabs API key is configured."""
+        return self.elevenlabs_api_key is not None
